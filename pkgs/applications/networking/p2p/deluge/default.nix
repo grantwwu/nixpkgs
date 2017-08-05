@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, intltool, libtorrentRasterbar_1_0, pythonPackages }:
+{ stdenv, fetchurl, intltool, libtorrentRasterbar_1_0, pythonPackages, gnome3 }:
 pythonPackages.buildPythonPackage rec {
   name = "deluge-${version}";
   version = "1.3.15";
@@ -8,11 +8,17 @@ pythonPackages.buildPythonPackage rec {
     sha256 = "1467b9hmgw59gf398mhbf40ggaka948yz3afh6022v753c9j7y6w";
   };
 
+  buildInputs = [ gnome3.gnome_themes_standard ];
+
+  propagatedUserEnvPkgs = [ gnome3.gnome_themes_standard ];
+
   propagatedBuildInputs = with pythonPackages; [
     pyGtkGlade libtorrentRasterbar_1_0 twisted Mako chardet pyxdg pyopenssl service-identity
   ];
 
-  nativeBuildInputs = [ intltool ];
+  nativeBuildInputs = [ intltool gnome3.gnome_themes_standard
+    gnome3.defaultIconTheme gnome3.gsettings_desktop_schemas
+  ];
 
   postInstall = ''
      mkdir -p $out/share/applications
