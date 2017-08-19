@@ -1,5 +1,5 @@
 { stdenv, fetchurl, intltool, libtorrentRasterbar_1_0, pythonPackages, gnome3,
-  wrapGAppsHook }:
+  wrapGAppsHook, gtk_engines }:
 pythonPackages.buildPythonPackage rec {
   name = "deluge-${version}";
   version = "1.3.15";
@@ -11,7 +11,7 @@ pythonPackages.buildPythonPackage rec {
 
   buildInputs = [ gnome3.gnome_themes_standard wrapGAppsHook
     gnome3.gnome_themes_standard gnome3.defaultIconTheme
-    gnome3.gsettings_desktop_schemas
+    gnome3.gsettings_desktop_schemas gtk_engines
   ];
 
   propagatedUserEnvPkgs = [ gnome3.gnome_themes_standard ];
